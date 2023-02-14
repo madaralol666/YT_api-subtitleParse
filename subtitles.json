@@ -1,0 +1,542 @@
+{'text': "so we'll talk about something very", 'start': 0.08, 'duration': 2.4}
+{'text': 'different today very different to my', 'start': 1.04, 'duration': 3.92}
+{'text': 'normal image filtering sort of videos uh', 'start': 2.48, 'duration': 5.439}
+{'text': 'that is buffer overflow exploits and and', 'start': 4.96, 'duration': 5.04}
+{'text': 'what they are and how you do them um', 'start': 7.919, 'duration': 4.561}
+{'text': "which is kind of fun um i'm you know", 'start': 10.0, 'duration': 3.92}
+{'text': 'obviously somewhat of a geek i quite', 'start': 12.48, 'duration': 3.039}
+{'text': 'like these sort of things low level', 'start': 13.92, 'duration': 4.32}
+{'text': 'memory exploits', 'start': 15.519, 'duration': 2.721}
+{'text': 'a buffer overflow exploit is a situation', 'start': 20.0, 'duration': 3.279}
+{'text': 'where', 'start': 22.32, 'duration': 2.64}
+{'text': "we're using some probably a low level c", 'start': 23.279, 'duration': 3.441}
+{'text': 'function or something to write a string', 'start': 24.96, 'duration': 4.079}
+{'text': 'or some other variable into a piece of', 'start': 26.72, 'duration': 4.479}
+{'text': 'memory that is only a certain length but', 'start': 29.039, 'duration': 3.36}
+{'text': "we're trying to write something in it's", 'start': 31.199, 'duration': 3.841}
+{'text': 'longer than that and it then overwrites', 'start': 32.399, 'duration': 4.481}
+{'text': 'the later memory addresses and that can', 'start': 35.04, 'duration': 3.44}
+{'text': 'cause all kinds of problems the first', 'start': 36.88, 'duration': 3.839}
+{'text': 'thing we should talk about probably is', 'start': 38.48, 'duration': 4.399}
+{'text': 'roughly what happens in memory with a', 'start': 40.719, 'duration': 4.16}
+{'text': "program when it's run now we're talking", 'start': 42.879, 'duration': 4.401}
+{'text': 'about c programs in linux today just', 'start': 44.879, 'duration': 4.241}
+{'text': 'because i happen to have a linux vm', 'start': 47.28, 'duration': 4.08}
+{'text': "running here and it's easier but this", 'start': 49.12, 'duration': 3.759}
+{'text': 'will apply to many different languages', 'start': 51.36, 'duration': 3.76}
+{'text': 'many different operating systems', 'start': 52.879, 'duration': 3.921}
+{'text': 'so when a program is run by the', 'start': 55.12, 'duration': 3.759}
+{'text': "operating system so we're in some shell", 'start': 56.8, 'duration': 3.68}
+{'text': 'and we type in a command line to run a', 'start': 58.879, 'duration': 3.36}
+{'text': 'program the', 'start': 60.48, 'duration': 3.52}
+{'text': 'operating system will', 'start': 62.239, 'duration': 4.321}
+{'text': 'effectively call as a as a function the', 'start': 64.0, 'duration': 4.799}
+{'text': 'main method of your of your code but', 'start': 66.56, 'duration': 4.559}
+{'text': 'your actual process your your executable', 'start': 68.799, 'duration': 3.841}
+{'text': 'we will be held in memory in a very', 'start': 71.119, 'duration': 3.441}
+{'text': 'specific way', 'start': 72.64, 'duration': 3.92}
+{'text': "and it's consistent between different", 'start': 74.56, 'duration': 4.72}
+{'text': 'processes so we have a big block of ram', 'start': 76.56, 'duration': 4.32}
+{'text': "we don't know how big our ram is because", 'start': 79.28, 'duration': 3.6}
+{'text': 'it can be varied but we use something', 'start': 80.88, 'duration': 2.96}
+{'text': 'called virtual memory address', 'start': 82.88, 'duration': 3.52}
+{'text': 'translation to say that everything in', 'start': 83.84, 'duration': 4.8}
+{'text': 'here this is naught o x naught naught', 'start': 86.4, 'duration': 4.32}
+{'text': 'naught dot dot this is at the bottom of', 'start': 88.64, 'duration': 5.28}
+{'text': 'the memory as it were and up here is o x', 'start': 90.72, 'duration': 5.92}
+{'text': 'f f f so this is the equivalent of one', 'start': 93.92, 'duration': 4.72}
+{'text': 'one one one one one one memory address', 'start': 96.64, 'duration': 4.56}
+{'text': 'all the way up to 32 or 64 bits and this', 'start': 98.64, 'duration': 5.36}
+{'text': 'is naught now when you use this there', 'start': 101.2, 'duration': 4.239}
+{'text': 'are certain areas of this memory that', 'start': 104.0, 'duration': 3.52}
+{'text': 'are always allocated to certain things', 'start': 105.439, 'duration': 5.121}
+{'text': 'so up here we have kernel things so this', 'start': 107.52, 'duration': 4.559}
+{'text': 'will be command line parameters that', 'start': 110.56, 'duration': 3.36}
+{'text': "we've passed to our program and", 'start': 112.079, 'duration': 3.841}
+{'text': 'environment variables and so on down', 'start': 113.92, 'duration': 4.08}
+{'text': 'here we have something called the text', 'start': 115.92, 'duration': 3.839}
+{'text': "that's the actual code of our program", 'start': 118.0, 'duration': 3.36}
+{'text': "the machine instructions that we've", 'start': 119.759, 'duration': 4.081}
+{'text': "compiled get loaded in there now that's", 'start': 121.36, 'duration': 3.84}
+{'text': "read only because we don't want to be", 'start': 123.84, 'duration': 3.279}
+{'text': 'messing about down there in here we have', 'start': 125.2, 'duration': 4.8}
+{'text': 'data so uninitialized and initialized', 'start': 127.119, 'duration': 4.561}
+{'text': 'variables get held here and then we have', 'start': 130.0, 'duration': 3.44}
+{'text': 'the heap now the heat may have been', 'start': 131.68, 'duration': 3.76}
+{'text': "mentioned from time to time it's where", 'start': 133.44, 'duration': 4.159}
+{'text': 'you allocate large things in your memory', 'start': 135.44, 'duration': 3.92}
+{'text': 'big area of memory that you can allocate', 'start': 137.599, 'duration': 3.841}
+{'text': 'huge chunks on to do various things okay', 'start': 139.36, 'duration': 3.44}
+{'text': 'what you do with that is of course up to', 'start': 141.44, 'duration': 3.519}
+{'text': 'your program and then up here perhaps', 'start': 142.8, 'duration': 3.76}
+{'text': 'the most important bit in some ways', 'start': 144.959, 'duration': 4.081}
+{'text': 'anyway is the stack now the stack holds', 'start': 146.56, 'duration': 4.08}
+{'text': 'the local variables for each of your', 'start': 149.04, 'duration': 3.44}
+{'text': 'functions and when you call a new', 'start': 150.64, 'duration': 3.679}
+{'text': "function like let's say you say printf", 'start': 152.48, 'duration': 4.479}
+{'text': 'and then some parameters that gets put', 'start': 154.319, 'duration': 4.801}
+{'text': 'on the end of the stack so the heap', 'start': 156.959, 'duration': 3.92}
+{'text': 'grows in this direction as you add', 'start': 159.12, 'duration': 3.68}
+{'text': 'memory and the stack grows in this', 'start': 160.879, 'duration': 4.0}
+{'text': "direction now that i've laid that out we", 'start': 162.8, 'duration': 3.68}
+{'text': "won't talk about it anymore we'll just", 'start': 164.879, 'duration': 3.681}
+{'text': "focus on the stack okay because that's", 'start': 166.48, 'duration': 2.88}
+{'text': 'where', 'start': 168.56, 'duration': 2.399}
+{'text': 'a lot of these buffer overflows happen', 'start': 169.36, 'duration': 3.04}
+{'text': 'you can have overflows in other areas', 'start': 170.959, 'duration': 2.64}
+{'text': "but we're not going to be dealing with", 'start': 172.4, 'duration': 2.64}
+{'text': "them today i'm going to turn this", 'start': 173.599, 'duration': 3.121}
+{'text': "sideways because i think it's just a", 'start': 175.04, 'duration': 3.279}
+{'text': 'little bit easier to understand at least', 'start': 176.72, 'duration': 3.76}
+{'text': "that's how i tended to look at it okay", 'start': 178.319, 'duration': 3.521}
+{'text': 'so', 'start': 180.48, 'duration': 3.6}
+{'text': 'this is our memory again nice and big', 'start': 181.84, 'duration': 4.56}
+{'text': 'this is now our stack area excuse my', 'start': 184.08, 'duration': 4.64}
+{'text': "programmer's writing up here we have for", 'start': 186.4, 'duration': 4.16}
+{'text': 'high memory addresses', 'start': 188.72, 'duration': 4.159}
+{'text': 'ff.dot so something up here is hi and', 'start': 190.56, 'duration': 3.92}
+{'text': 'this is ox', 'start': 192.879, 'duration': 2.801}
+{'text': 'naught naught now of course the stack', 'start': 194.48, 'duration': 2.72}
+{'text': "won't be taking up this whole region but", 'start': 195.68, 'duration': 3.199}
+{'text': "it doesn't matter so high memory", 'start': 197.2, 'duration': 3.52}
+{'text': 'addresses and low memory addresses and', 'start': 198.879, 'duration': 4.0}
+{'text': 'the stack grows downwards so when we add', 'start': 200.72, 'duration': 4.079}
+{'text': 'something onto the end of a stack', 'start': 202.879, 'duration': 3.36}
+{'text': 'it gets put on this side and then this', 'start': 204.799, 'duration': 3.36}
+{'text': "moves in this direction of course i'm", 'start': 206.239, 'duration': 3.041}
+{'text': 'talking about a stack about telling you', 'start': 208.159, 'duration': 2.561}
+{'text': "what a stack is professor brailsford's", 'start': 209.28, 'duration': 2.56}
+{'text': 'already talked about this and probably', 'start': 210.72, 'duration': 2.64}
+{'text': 'done a much better job of explaining it', 'start': 211.84, 'duration': 3.679}
+{'text': "than i would there's a lot of computer", 'start': 213.36, 'duration': 4.239}
+{'text': 'science depends on stacks i sometimes', 'start': 215.519, 'duration': 3.761}
+{'text': 'think that stacks and trees is just', 'start': 217.599, 'duration': 3.681}
+{'text': 'about all computer science is about so', 'start': 219.28, 'duration': 3.36}
+{'text': "we'll just say that you know how stuck", 'start': 221.28, 'duration': 3.599}
+{'text': "works and then we'll move on we have", 'start': 222.64, 'duration': 4.239}
+{'text': "some program that's calling a function a", 'start': 224.879, 'duration': 3.92}
+{'text': 'function is some area of code that does', 'start': 226.879, 'duration': 3.44}
+{'text': 'something and then returns back to where', 'start': 228.799, 'duration': 3.761}
+{'text': 'it was before so this is our calling', 'start': 230.319, 'duration': 4.961}
+{'text': 'function here when the calling function', 'start': 232.56, 'duration': 4.64}
+{'text': 'wants to make use of something', 'start': 235.28, 'duration': 3.84}
+{'text': "it adds its parameters that it's passing", 'start': 237.2, 'duration': 3.84}
+{'text': 'on to the stack so this will be', 'start': 239.12, 'duration': 4.319}
+{'text': 'parameter a and this will be parameter b', 'start': 241.04, 'duration': 3.839}
+{'text': 'and they will be added into the stack in', 'start': 243.439, 'duration': 3.681}
+{'text': 'reverse order and then the assembler', 'start': 244.879, 'duration': 3.601}
+{'text': 'code for this function will make', 'start': 247.12, 'duration': 3.199}
+{'text': 'something called a call and that will', 'start': 248.48, 'duration': 4.0}
+{'text': 'jump to somewhere else in memory and', 'start': 250.319, 'duration': 3.84}
+{'text': "work with these two things and it's the", 'start': 252.48, 'duration': 3.599}
+{'text': 'nature of this stack that causes us to', 'start': 254.159, 'duration': 4.08}
+{'text': "have problems let's look at some code", 'start': 256.079, 'duration': 4.0}
+{'text': "and then we'll see how it works i've got", 'start': 258.239, 'duration': 3.601}
+{'text': "myself here a program but isn't very", 'start': 260.079, 'duration': 3.921}
+{'text': "good i wrote it so it's a piece of c", 'start': 261.84, 'duration': 3.84}
+{'text': "code so if we look at it it's just a", 'start': 264.0, 'duration': 3.36}
+{'text': 'very simple c code but allocate some', 'start': 265.68, 'duration': 3.36}
+{'text': 'memory on the stack and then copies a', 'start': 267.36, 'duration': 3.76}
+{'text': 'string into it from the command line', 'start': 269.04, 'duration': 4.8}
+{'text': "okay so up here we've got the main", 'start': 271.12, 'duration': 4.799}
+{'text': 'function for c that takes the number of', 'start': 273.84, 'duration': 3.68}
+{'text': "parameters it's been given and then", 'start': 275.919, 'duration': 3.441}
+{'text': "appointed to those variables that you've", 'start': 277.52, 'duration': 3.52}
+{'text': "got and they'll be held in the kernel", 'start': 279.36, 'duration': 3.52}
+{'text': "area of our memory we'll allocate a", 'start': 281.04, 'duration': 4.0}
+{'text': "buffer that's 500 characters long and", 'start': 282.88, 'duration': 4.16}
+{'text': 'then we call a function called string', 'start': 285.04, 'duration': 2.879}
+{'text': 'copy', 'start': 287.04, 'duration': 2.48}
+{'text': 'which will copy', 'start': 287.919, 'duration': 4.081}
+{'text': 'our command line parameter from argv', 'start': 289.52, 'duration': 4.8}
+{'text': 'into our buffer our function puts on the', 'start': 292.0, 'duration': 4.32}
+{'text': 'return address which is replacing the', 'start': 294.32, 'duration': 3.52}
+{'text': 'code that we need to go back to once', 'start': 296.32, 'duration': 3.12}
+{'text': "we've done the string copy so that's how", 'start': 297.84, 'duration': 3.12}
+{'text': "main knows where to go after it's", 'start': 299.44, 'duration': 2.4}
+{'text': 'finished', 'start': 300.96, 'duration': 3.2}
+{'text': 'and then we put on a reference to our', 'start': 301.84, 'duration': 3.6}
+{'text': 'the base pointer in our previous', 'start': 304.16, 'duration': 2.479}
+{'text': "function we won't worry about that too", 'start': 305.44, 'duration': 2.24}
+{'text': "much because it's not relevant", 'start': 306.639, 'duration': 3.28}
+{'text': 'particularly to this video so this is', 'start': 307.68, 'duration': 4.72}
+{'text': 'just going to be our ebp base pointer', 'start': 309.919, 'duration': 4.56}
+{'text': 'this is our allocated space for our', 'start': 312.4, 'duration': 4.88}
+{'text': "buffer and it's 500 long if we write", 'start': 314.479, 'duration': 5.041}
+{'text': "into it something that's longer than 500", 'start': 317.28, 'duration': 3.84}
+{'text': "we're going to go straight past the", 'start': 319.52, 'duration': 4.08}
+{'text': 'buffer over this and crucially over our', 'start': 321.12, 'duration': 4.639}
+{'text': "return variable and that's where we", 'start': 323.6, 'duration': 4.08}
+{'text': "point back to something we shouldn't be", 'start': 325.759, 'duration': 2.961}
+{'text': 'doing', 'start': 327.68, 'duration': 3.28}
+{'text': "okay so what i'm going to do is is walk", 'start': 328.72, 'duration': 3.919}
+{'text': 'through it in the code', 'start': 330.96, 'duration': 3.92}
+{'text': "and then let's see if it works so this", 'start': 332.639, 'duration': 4.4}
+{'text': 'is my kali linux distribution which has', 'start': 334.88, 'duration': 4.24}
+{'text': 'all kinds of slightly dubious password', 'start': 337.039, 'duration': 3.681}
+{'text': 'cracking tools and other penetration', 'start': 339.12, 'duration': 3.12}
+{'text': "testing tools it's meant for ethical", 'start': 340.72, 'duration': 3.199}
+{'text': "hacking let's just make that clear i've", 'start': 342.24, 'duration': 3.76}
+{'text': 'written here a small function that does', 'start': 343.919, 'duration': 3.921}
+{'text': 'our copy from the command line okay now', 'start': 346.0, 'duration': 3.44}
+{'text': "i've compiled it and i can run it so i", 'start': 347.84, 'duration': 4.0}
+{'text': 'can run my vulnerable code with hello', 'start': 349.44, 'duration': 3.84}
+{'text': 'and that will copy hello into this', 'start': 351.84, 'duration': 3.52}
+{'text': 'buffer and then simply return so nothing', 'start': 353.28, 'duration': 4.16}
+{'text': "happens it's the most boring program", 'start': 355.36, 'duration': 3.76}
+{'text': 'ever another program might do something', 'start': 357.44, 'duration': 4.0}
+{'text': 'like copy hello in there and then now', 'start': 359.12, 'duration': 3.6}
+{'text': "it's in the buffer they can go off and", 'start': 361.44, 'duration': 2.96}
+{'text': "process it yeah i mean maybe you've got", 'start': 362.72, 'duration': 3.12}
+{'text': 'a function that makes things all up a', 'start': 364.4, 'duration': 3.2}
+{'text': 'case so you copy hello off then you', 'start': 365.84, 'duration': 4.16}
+{'text': 'change this new copy to be all uppercase', 'start': 367.6, 'duration': 3.76}
+{'text': 'and then you output it to the screen and', 'start': 370.0, 'duration': 2.72}
+{'text': "this doesn't have to be main this could", 'start': 371.36, 'duration': 3.04}
+{'text': "be any function we're going to run", 'start': 372.72, 'duration': 4.0}
+{'text': 'something called gdb which is the linux', 'start': 374.4, 'duration': 5.2}
+{'text': 'command line debugger', 'start': 376.72, 'duration': 4.8}
+{'text': "i wouldn't advise using gdb unless you", 'start': 379.6, 'duration': 3.52}
+{'text': 'really like seeing a lot of assembly and', 'start': 381.52, 'duration': 2.959}
+{'text': 'really doing low-level linux things', 'start': 383.12, 'duration': 2.56}
+{'text': "there's a lot of text on the screen", 'start': 384.479, 'duration': 2.321}
+{'text': "there so we don't have to worry about it", 'start': 385.68, 'duration': 2.639}
+{'text': 'no this text here is just warranty', 'start': 386.8, 'duration': 3.839}
+{'text': "information so now i'm going to type in", 'start': 388.319, 'duration': 3.6}
+{'text': 'list', 'start': 390.639, 'duration': 2.721}
+{'text': 'and it shows us', 'start': 391.919, 'duration': 3.361}
+{'text': 'the code for our function so we can see', 'start': 393.36, 'duration': 3.76}
+{'text': "it's just a compiled function now it", 'start': 395.28, 'duration': 3.52}
+{'text': 'knows this because the compiler included', 'start': 397.12, 'duration': 3.04}
+{'text': 'this information along with the', 'start': 398.8, 'duration': 3.519}
+{'text': 'executable now we can also show the', 'start': 400.16, 'duration': 4.0}
+{'text': 'machine code for this so we can say', 'start': 402.319, 'duration': 4.561}
+{'text': 'disassemble main and we can see the code', 'start': 404.16, 'duration': 4.4}
+{'text': 'for main so there are the instructions', 'start': 406.88, 'duration': 3.439}
+{'text': 'that would actually go to the cpu these', 'start': 408.56, 'duration': 3.039}
+{'text': 'are the actual cpu instructions that', 'start': 410.319, 'duration': 3.361}
+{'text': "will be run okay now we won't dwell on", 'start': 411.599, 'duration': 3.681}
+{'text': 'much of this because assembly is perhaps', 'start': 413.68, 'duration': 4.0}
+{'text': 'a whole series of talks by someone other', 'start': 415.28, 'duration': 4.24}
+{'text': 'than me steve bagley knows a lot about', 'start': 417.68, 'duration': 3.6}
+{'text': 'assembler however a couple of really', 'start': 419.52, 'duration': 4.72}
+{'text': 'important things are this line here sub', 'start': 421.28, 'duration': 6.72}
+{'text': "of ox 1f4 from esp that's allocating the", 'start': 424.24, 'duration': 5.679}
+{'text': "500 for the buffer that is we're here", 'start': 428.0, 'duration': 3.68}
+{'text': 'and we go 500 in this direction and', 'start': 429.919, 'duration': 3.201}
+{'text': "that's where our buffer goes so buffer's", 'start': 431.68, 'duration': 3.84}
+{'text': 'sitting to the left on this image but', 'start': 433.12, 'duration': 3.919}
+{'text': 'lower in memory than the rest of our', 'start': 435.52, 'duration': 4.0}
+{'text': 'variables okay now', 'start': 437.039, 'duration': 5.521}
+{'text': 'we can run this program from gdb and if', 'start': 439.52, 'duration': 4.16}
+{'text': 'it crashes then we can look at the', 'start': 442.56, 'duration': 2.72}
+{'text': "registers and find out what's happened", 'start': 443.68, 'duration': 3.28}
+{'text': 'so we can say run', 'start': 445.28, 'duration': 2.88}
+{'text': 'hello', 'start': 446.96, 'duration': 3.84}
+{'text': 'and it will start the program and say', 'start': 448.16, 'duration': 6.0}
+{'text': "hello okay and it's exited normally now", 'start': 450.8, 'duration': 4.56}
+{'text': 'we can pass something a little bit', 'start': 454.16, 'duration': 3.28}
+{'text': 'longer than hello if we pass something', 'start': 455.36, 'duration': 4.64}
+{'text': "that's over 500 then this buffer will go", 'start': 457.44, 'duration': 5.039}
+{'text': 'over this base pointer and this return', 'start': 460.0, 'duration': 4.879}
+{'text': "value and break the code so that'll just", 'start': 462.479, 'duration': 4.321}
+{'text': 'crash you all it should just crash it', 'start': 464.879, 'duration': 4.0}
+{'text': 'python for example can produce strings', 'start': 466.8, 'duration': 4.079}
+{'text': 'based on simple scripts on the command', 'start': 468.879, 'duration': 3.841}
+{'text': 'line so what we do is we say run', 'start': 470.879, 'duration': 4.481}
+{'text': 'and then we pass it a python script', 'start': 472.72, 'duration': 3.52}
+{'text': 'of', 'start': 475.36, 'duration': 4.64}
+{'text': "print 41 that's the a character 500 and", 'start': 476.24, 'duration': 6.079}
+{'text': "let's say six times okay just a little", 'start': 480.0, 'duration': 4.0}
+{'text': "bit more than 500 so it's going to cause", 'start': 482.319, 'duration': 2.961}
+{'text': 'somewhat of a problem but not a', 'start': 484.0, 'duration': 2.479}
+{'text': 'catastrophe', 'start': 485.28, 'duration': 3.599}
+{'text': "okay and then we run that and it's it's", 'start': 486.479, 'duration': 4.081}
+{'text': 'received a segmentation fault now a', 'start': 488.879, 'duration': 3.681}
+{'text': 'segmentation fault is what a cpu will', 'start': 490.56, 'duration': 3.12}
+{'text': "send back to you when you're trying to", 'start': 492.56, 'duration': 2.24}
+{'text': "access something in memory you shouldn't", 'start': 493.68, 'duration': 3.28}
+{'text': "be doing okay now that's not actually", 'start': 494.8, 'duration': 3.679}
+{'text': 'happened because we overwrote somewhere', 'start': 496.96, 'duration': 3.359}
+{'text': "we shouldn't what's happened is that the", 'start': 498.479, 'duration': 4.481}
+{'text': 'return address was half overwritten with', 'start': 500.319, 'duration': 4.801}
+{'text': "these 41s so it doesn't know what it is", 'start': 502.96, 'duration': 3.959}
+{'text': 'so yeah there is nothing in memory at', 'start': 505.12, 'duration': 3.68}
+{'text': "b704141 and if there is it doesn't", 'start': 506.919, 'duration': 3.881}
+{'text': "belong to this process it's not allowed", 'start': 508.8, 'duration': 4.239}
+{'text': 'so it gets a segmentation fault so if we', 'start': 510.8, 'duration': 5.44}
+{'text': "change this to 508 we're going two bytes", 'start': 513.039, 'duration': 5.12}
+{'text': "further along which means we're now", 'start': 516.24, 'duration': 3.599}
+{'text': 'right overwriting the entire of our', 'start': 518.159, 'duration': 4.081}
+{'text': "return address we're overwriting this", 'start': 519.839, 'duration': 5.841}
+{'text': 'red here with 41s now if there was some', 'start': 522.24, 'duration': 5.76}
+{'text': 'virus code at 4141.41', 'start': 525.68, 'duration': 4.0}
+{'text': "that's a big problem okay so that's", 'start': 528.0, 'duration': 3.36}
+{'text': "where we're going with this all right so", 'start': 529.68, 'duration': 3.2}
+{'text': 'we run this', 'start': 531.36, 'duration': 3.44}
+{'text': 'and you can see the return address is', 'start': 532.88, 'duration': 5.92}
+{'text': 'now 41 41 41 41 now i can actually i can', 'start': 534.8, 'duration': 5.52}
+{'text': 'show you the registers and you can see', 'start': 538.8, 'duration': 3.84}
+{'text': 'that the instruction pointer is now try', 'start': 540.32, 'duration': 5.6}
+{'text': "pointing at 4141 so that means that it's", 'start': 542.64, 'duration': 5.12}
+{'text': 'read this return value and try to return', 'start': 545.92, 'duration': 3.919}
+{'text': 'to that place in the code and run it and', 'start': 547.76, 'duration': 3.759}
+{'text': "of course it can't now we can have a", 'start': 549.839, 'duration': 3.601}
+{'text': "little bit more fun okay we've broken", 'start': 551.519, 'duration': 4.561}
+{'text': 'our code what can we do now well what we', 'start': 553.44, 'duration': 4.399}
+{'text': 'need to do is change this return value', 'start': 556.08, 'duration': 3.04}
+{'text': "to somewhere where we've got some", 'start': 557.839, 'duration': 3.201}
+{'text': "payload that we're trying to give we're", 'start': 559.12, 'duration': 3.68}
+{'text': 'trying to produce okay', 'start': 561.04, 'duration': 4.64}
+{'text': 'so luckily if i quit this debugger', 'start': 562.8, 'duration': 4.4}
+{'text': 'i have some', 'start': 565.68, 'duration': 3.36}
+{'text': 'pre-prepared payload just for this', 'start': 567.2, 'duration': 4.079}
+{'text': 'occasion okay now in fact this payload', 'start': 569.04, 'duration': 4.16}
+{'text': 'is just a simple very short program in', 'start': 571.279, 'duration': 3.68}
+{'text': 'assembler that', 'start': 573.2, 'duration': 3.52}
+{'text': 'puts some variables on the stack and', 'start': 574.959, 'duration': 3.841}
+{'text': 'then executes a system call', 'start': 576.72, 'duration': 4.559}
+{'text': 'to tell it to run a shell okay to run a', 'start': 578.8, 'duration': 5.2}
+{'text': 'new command line okay so if i show this', 'start': 581.279, 'duration': 3.68}
+{'text': 'code', 'start': 584.0, 'duration': 3.6}
+{'text': 'uh shell code okay this code will depend', 'start': 584.959, 'duration': 4.32}
+{'text': 'on the linux oscillation system and you', 'start': 587.6, 'duration': 3.12}
+{'text': "know on whether you're using an intel", 'start': 589.279, 'duration': 3.601}
+{'text': 'cpu or something else okay this is just', 'start': 590.72, 'duration': 5.119}
+{'text': 'a string of different commands crucially', 'start': 592.88, 'duration': 4.88}
+{'text': 'this xcdx80', 'start': 595.839, 'duration': 3.921}
+{'text': 'is throwing a system interrupt which', 'start': 597.76, 'duration': 3.84}
+{'text': "means that it's going to run the system", 'start': 599.76, 'duration': 3.6}
+{'text': "call okay that's all we'll go into it", 'start': 601.6, 'duration': 3.919}
+{'text': 'about this what this will actually do', 'start': 603.36, 'duration': 4.56}
+{'text': 'is run something called zsh which is an', 'start': 605.519, 'duration': 3.681}
+{'text': "old shell which doesn't have a lot of", 'start': 607.92, 'duration': 3.599}
+{'text': "protections involved so let's go back to", 'start': 609.2, 'duration': 3.68}
+{'text': 'our debugger', 'start': 611.519, 'duration': 3.521}
+{'text': "and we're going to run again but this", 'start': 612.88, 'duration': 3.36}
+{'text': "time we're going to run and we're going", 'start': 615.04, 'duration': 3.6}
+{'text': 'to run a slightly more malicious piece', 'start': 616.24, 'duration': 5.279}
+{'text': "of code we're going to put in our", 'start': 618.64, 'duration': 4.639}
+{'text': '41s', 'start': 621.519, 'duration': 4.721}
+{'text': "times by 508 and then we're going to put", 'start': 623.279, 'duration': 6.081}
+{'text': 'in our shell code there we go okay', 'start': 626.24, 'duration': 5.36}
+{'text': "so now we're doing all 41s and then a", 'start': 629.36, 'duration': 4.479}
+{'text': "bunch of malicious code okay now that's", 'start': 631.6, 'duration': 3.76}
+{'text': "actually now too long we've gone too far", 'start': 633.839, 'duration': 3.921}
+{'text': "but we'll fix that in a minute okay and", 'start': 635.36, 'duration': 4.56}
+{'text': 'finally the last thing we want to add in', 'start': 637.76, 'duration': 4.079}
+{'text': "is our return address which we'll", 'start': 639.92, 'duration': 4.0}
+{'text': 'customize in a moment to craft an', 'start': 641.839, 'duration': 4.24}
+{'text': 'exploit from this what we need to do is', 'start': 643.92, 'duration': 3.52}
+{'text': 'remember the fact that string copy is', 'start': 646.079, 'duration': 3.601}
+{'text': 'going to copy into our buffer okay so', 'start': 647.44, 'duration': 3.68}
+{'text': "we're going to start here", 'start': 649.68, 'duration': 4.08}
+{'text': 'we want to overwrite the memory of this', 'start': 651.12, 'duration': 4.32}
+{'text': 'return address with somewhere pointing', 'start': 653.76, 'duration': 3.92}
+{'text': 'to our', 'start': 655.44, 'duration': 4.959}
+{'text': "malicious code okay now we can't", 'start': 657.68, 'duration': 3.92}
+{'text': 'necessarily know for sure where our', 'start': 660.399, 'duration': 2.481}
+{'text': 'malicious code might be stored elsewhere', 'start': 661.6, 'duration': 2.72}
+{'text': "on the disk so we don't worry about that", 'start': 662.88, 'duration': 2.639}
+{'text': 'or on memory', 'start': 664.32, 'duration': 2.639}
+{'text': 'we want to put it in this buffer so', 'start': 665.519, 'duration': 2.481}
+{'text': "we're going to put some malicious code", 'start': 666.959, 'duration': 2.241}
+{'text': "in here and then we're going to have a", 'start': 668.0, 'duration': 3.36}
+{'text': 'return address that points back into it', 'start': 669.2, 'duration': 3.84}
+{'text': 'okay now', 'start': 671.36, 'duration': 3.52}
+{'text': 'memory moves around slightly when you', 'start': 673.04, 'duration': 3.28}
+{'text': 'move when you run these programs that', 'start': 674.88, 'duration': 2.32}
+{'text': 'you know', 'start': 676.32, 'duration': 2.32}
+{'text': 'things change slightly environment', 'start': 677.2, 'duration': 3.199}
+{'text': 'variables are added and removed things', 'start': 678.64, 'duration': 3.68}
+{'text': 'move around so we want to try and hedge', 'start': 680.399, 'duration': 3.44}
+{'text': 'our bets and get the rough area that', 'start': 682.32, 'duration': 3.84}
+{'text': 'this will go in in here we put in', 'start': 683.839, 'duration': 4.641}
+{'text': 'something called a no-op sled or you', 'start': 686.16, 'duration': 4.08}
+{'text': "know there's various other words for it", 'start': 688.48, 'duration': 2.88}
+{'text': 'so this is', 'start': 690.24, 'duration': 4.719}
+{'text': 'simply slash x90 that is the machine', 'start': 691.36, 'duration': 5.2}
+{'text': 'instruction for just move to the next', 'start': 694.959, 'duration': 3.601}
+{'text': "one so that's good anywhere we land in", 'start': 696.56, 'duration': 4.16}
+{'text': 'that no op is going to tick along to our', 'start': 698.56, 'duration': 5.44}
+{'text': 'malicious code so we have a load of x90s', 'start': 700.72, 'duration': 6.799}
+{'text': 'here then we have our shell code', 'start': 704.0, 'duration': 4.56}
+{'text': 'right', 'start': 707.519, 'duration': 2.641}
+{'text': "that's our malicious payload that runs", 'start': 708.56, 'duration': 2.64}
+{'text': 'our shell', 'start': 710.16, 'duration': 2.799}
+{'text': 'and then we have the return address', 'start': 711.2, 'duration': 2.96}
+{'text': 'right in the right place we have our', 'start': 712.959, 'duration': 3.361}
+{'text': 'return address that points back right', 'start': 714.16, 'duration': 4.0}
+{'text': 'smack in the middle of these x90s and', 'start': 716.32, 'duration': 3.12}
+{'text': "what that means is even if he's move a", 'start': 718.16, 'duration': 3.04}
+{'text': "bit it'll still work so it's like having", 'start': 719.44, 'duration': 4.16}
+{'text': "a slope almost is it it's exactly like", 'start': 721.2, 'duration': 4.24}
+{'text': 'that yes anywhere we land in here is', 'start': 723.6, 'duration': 3.12}
+{'text': "going to cause a real problem so we've", 'start': 725.44, 'duration': 4.0}
+{'text': "got our bomb or uh i don't know yeah pit", 'start': 726.72, 'duration': 5.2}
+{'text': "of lava yeah it's for sarlacc pit isn't", 'start': 729.44, 'duration': 3.839}
+{'text': 'it right and and you know what sled', 'start': 731.92, 'duration': 2.88}
+{'text': 'takes you in and then you get digested', 'start': 733.279, 'duration': 2.8}
+{'text': 'over ten thousand years or whatever it', 'start': 734.8, 'duration': 2.719}
+{'text': 'is', 'start': 736.079, 'duration': 3.121}
+{'text': "so we've got three things we need to do", 'start': 737.519, 'duration': 3.841}
+{'text': 'we need to put in some x90s we need to', 'start': 739.2, 'duration': 3.68}
+{'text': "put in our shell code which i've already", 'start': 741.36, 'duration': 3.2}
+{'text': 'got and we need to put in our return', 'start': 742.88, 'duration': 3.519}
+{'text': 'address worry about the return address', 'start': 744.56, 'duration': 5.12}
+{'text': 'last okay so if we go back to my code we', 'start': 746.399, 'duration': 5.281}
+{'text': "change the first x41 that we're putting", 'start': 749.68, 'duration': 4.719}
+{'text': "in okay we change to 90. so we're", 'start': 751.68, 'duration': 5.279}
+{'text': 'putting in a load of no op operations', 'start': 754.399, 'duration': 4.641}
+{'text': "then we've got our shell code and then", 'start': 756.959, 'duration': 3.44}
+{'text': "we've got what will eventually be our", 'start': 759.04, 'duration': 2.72}
+{'text': 'return address', 'start': 760.399, 'duration': 3.041}
+{'text': "and we'll put in 10 of those because", 'start': 761.76, 'duration': 3.12}
+{'text': "it's just just to have a little bit of", 'start': 763.44, 'duration': 2.8}
+{'text': 'padding between our shell code and our', 'start': 764.88, 'duration': 3.519}
+{'text': "stack that's moving about now", 'start': 766.24, 'duration': 4.719}
+{'text': 'this 508 here people will have noticed', 'start': 768.399, 'duration': 4.161}
+{'text': "now this is too big because we're", 'start': 770.959, 'duration': 3.361}
+{'text': 'putting in extra information', 'start': 772.56, 'duration': 5.04}
+{'text': 'so if we write 508 bytes it goes exactly', 'start': 774.32, 'duration': 4.959}
+{'text': 'where we want over our return address', 'start': 777.6, 'duration': 3.76}
+{'text': "but we've now got 43", 'start': 779.279, 'duration': 4.56}
+{'text': "bytes of shell code and we've got 40", 'start': 781.36, 'duration': 3.52}
+{'text': 'bytes of', 'start': 783.839, 'duration': 5.601}
+{'text': 'return address so minus 40 minus 43 is', 'start': 784.88, 'duration': 6.16}
+{'text': '425.', 'start': 789.44, 'duration': 5.839}
+{'text': 'we change this 508 to 425', 'start': 791.04, 'duration': 6.16}
+{'text': 'and so now', 'start': 795.279, 'duration': 3.68}
+{'text': "this exploit here what we're looking at", 'start': 797.2, 'duration': 3.759}
+{'text': 'is exactly what i hoped it would be here', 'start': 798.959, 'duration': 5.44}
+{'text': 'okay some x90 no operation sleds the', 'start': 800.959, 'duration': 5.12}
+{'text': "shell code and then we've got our return", 'start': 804.399, 'duration': 4.161}
+{'text': 'address which is ten times four bytes we', 'start': 806.079, 'duration': 3.521}
+{'text': 'run this', 'start': 808.56, 'duration': 2.8}
+{'text': "and we've got a segmentation fault which", 'start': 809.6, 'duration': 3.039}
+{'text': 'is exactly what we hope we get because', 'start': 811.36, 'duration': 2.64}
+{'text': "our return address hasn't been changed", 'start': 812.639, 'duration': 2.161}
+{'text': 'yet', 'start': 814.0, 'duration': 2.56}
+{'text': "so now let's look at our memory and work", 'start': 814.8, 'duration': 3.44}
+{'text': 'out where our return address should go', 'start': 816.56, 'duration': 4.079}
+{'text': "so in in gdb it's it's pause the program", 'start': 818.24, 'duration': 4.0}
+{'text': 'after the segmentation fault so we can', 'start': 820.639, 'duration': 4.081}
+{'text': 'say list the registers', 'start': 822.24, 'duration': 4.719}
+{'text': "at about let's say 200 of them", 'start': 824.72, 'duration': 3.84}
+{'text': 'at the', 'start': 826.959, 'duration': 4.24}
+{'text': "stack point of minus 550 okay so that's", 'start': 828.56, 'duration': 3.519}
+{'text': 'going to be right at the beginning of', 'start': 831.199, 'duration': 3.361}
+{'text': "our buffer and what we're seeing here is", 'start': 832.079, 'duration': 4.801}
+{'text': 'a load of 90s in a row okay so we just', 'start': 834.56, 'duration': 3.519}
+{'text': 'need to pick a memory just right in the', 'start': 836.88, 'duration': 2.959}
+{'text': "middle of them so let's pick this one", 'start': 838.079, 'duration': 5.041}
+{'text': "let's say b f f f f a b a", 'start': 839.839, 'duration': 4.641}
+{'text': "okay i'm going to write that down so i", 'start': 843.12, 'duration': 2.48}
+{'text': "don't forget it", 'start': 844.48, 'duration': 3.44}
+{'text': "okay now there's a nice quirk in this", 'start': 845.6, 'duration': 4.32}
+{'text': 'which is the intel cpu is a little', 'start': 847.92, 'duration': 3.2}
+{'text': 'endian which means i have to put it in', 'start': 849.92, 'duration': 2.159}
+{'text': 'backwards', 'start': 851.12, 'duration': 1.68}
+{'text': 'but', 'start': 852.079, 'duration': 1.921}
+{'text': 'yet more things we have to learn but', 'start': 852.8, 'duration': 5.12}
+{'text': "it's fine b f f f f a", 'start': 854.0, 'duration': 6.079}
+{'text': "oop put the caps lock on and i can't", 'start': 857.92, 'duration': 4.32}
+{'text': 'type when people watching um', 'start': 860.079, 'duration': 5.12}
+{'text': 'and uh ba okay now', 'start': 862.24, 'duration': 5.599}
+{'text': 'theoretically when i run this', 'start': 865.199, 'duration': 4.241}
+{'text': 'what will happen is string copy will do', 'start': 867.839, 'duration': 3.521}
+{'text': 'its thing it will copy its string in and', 'start': 869.44, 'duration': 3.839}
+{'text': 'then when it tries to return it will', 'start': 871.36, 'duration': 4.4}
+{'text': 'load this return value and execute that', 'start': 873.279, 'duration': 4.081}
+{'text': 'instruction which will be somewhere in', 'start': 875.76, 'duration': 4.0}
+{'text': 'this buffer and then it will read off', 'start': 877.36, 'duration': 4.24}
+{'text': 'and run our shell code so we should get', 'start': 879.76, 'duration': 2.8}
+{'text': 'a shell', 'start': 881.6, 'duration': 3.44}
+{'text': 'okay', 'start': 882.56, 'duration': 5.12}
+{'text': "and we did okay so that's a good start", 'start': 885.04, 'duration': 4.72}
+{'text': 'right we know our program works albeit', 'start': 887.68, 'duration': 3.76}
+{'text': 'in a debugger with very little side', 'start': 889.76, 'duration': 2.96}
+{'text': 'effect okay', 'start': 891.44, 'duration': 3.36}
+{'text': 'the question now is can i take this and', 'start': 892.72, 'duration': 3.679}
+{'text': 'use it on the command line to gain', 'start': 894.8, 'duration': 4.399}
+{'text': 'access to this machine now', 'start': 896.399, 'duration': 5.361}
+{'text': 'linux has a linux has quite restrictive', 'start': 899.199, 'duration': 4.0}
+{'text': "policies on what can and can't be done", 'start': 901.76, 'duration': 3.68}
+{'text': 'from certain programs but some programs', 'start': 903.199, 'duration': 4.08}
+{'text': 'such as changing your password are run', 'start': 905.44, 'duration': 3.68}
+{'text': 'using something called suid', 'start': 907.279, 'duration': 3.68}
+{'text': 'so what that means is that for the sake', 'start': 909.12, 'duration': 4.24}
+{'text': 'of running that program you are a', 'start': 910.959, 'duration': 3.521}
+{'text': 'complete', 'start': 913.36, 'duration': 2.719}
+{'text': 'you have root access to that machine', 'start': 914.48, 'duration': 2.719}
+{'text': 'because otherwise how could you change', 'start': 916.079, 'duration': 2.88}
+{'text': "the password file you're not normally", 'start': 917.199, 'duration': 3.76}
+{'text': 'allowed to even read it', 'start': 918.959, 'duration': 4.32}
+{'text': 'the shadow file so if you find a', 'start': 920.959, 'duration': 4.0}
+{'text': 'vulnerability in that kind of program', 'start': 923.279, 'duration': 2.881}
+{'text': "and there's more than i think there", 'start': 924.959, 'duration': 2.081}
+{'text': 'should be', 'start': 926.16, 'duration': 2.4}
+{'text': 'then um', 'start': 927.04, 'duration': 2.88}
+{'text': "that's when there's a real problem now", 'start': 928.56, 'duration': 2.32}
+{'text': 'obviously these vulnerabilities are', 'start': 929.92, 'duration': 3.359}
+{'text': "getting rarer but it's catastrophic if", 'start': 930.88, 'duration': 4.399}
+{'text': "you get one okay so let's leave this", 'start': 933.279, 'duration': 4.8}
+{'text': 'debugger okay and then back to our nice', 'start': 935.279, 'duration': 5.92}
+{'text': 'clear command line environment okay so', 'start': 938.079, 'duration': 5.12}
+{'text': "if i list the files we've got this", 'start': 941.199, 'duration': 3.521}
+{'text': 'vulnerable program here is shown in red', 'start': 943.199, 'duration': 3.521}
+{'text': "that shows that it's suid root okay", 'start': 944.72, 'duration': 4.16}
+{'text': 'which means when we run it it will be', 'start': 946.72, 'duration': 4.239}
+{'text': 'running as root which is not great for', 'start': 948.88, 'duration': 4.319}
+{'text': 'security now that and my shoddy', 'start': 950.959, 'duration': 3.44}
+{'text': "programming which means it's fundable to", 'start': 953.199, 'duration': 3.521}
+{'text': 'a buffer overflow okay so if i copy my', 'start': 954.399, 'duration': 4.161}
+{'text': 'exploit okay here we go so this is a big', 'start': 956.72, 'duration': 3.52}
+{'text': 'moment of truth right whether this whole', 'start': 958.56, 'duration': 4.24}
+{'text': "video is gonna work i've put my code in", 'start': 960.24, 'duration': 3.76}
+{'text': 'okay it just is just like it was in the', 'start': 962.8, 'duration': 2.399}
+{'text': "debugger okay i've tried to make it", 'start': 964.0, 'duration': 2.48}
+{'text': "exactly the same so the memory doesn't", 'start': 965.199, 'duration': 3.601}
+{'text': "move around let's just say who am i on", 'start': 966.48, 'duration': 4.64}
+{'text': 'linux so we can say i am myself okay i', 'start': 968.8, 'duration': 4.08}
+{'text': "don't have root access so can i for", 'start': 971.12, 'duration': 3.36}
+{'text': 'example look at the password file so i', 'start': 972.88, 'duration': 4.0}
+{'text': 'can say cat is that etcetera', 'start': 974.48, 'duration': 3.359}
+{'text': 'shadow', 'start': 976.88, 'duration': 3.519}
+{'text': 'permission denied no dice okay', 'start': 977.839, 'duration': 4.0}
+{'text': "fair enough i'm not supposed to be", 'start': 980.399, 'duration': 3.921}
+{'text': 'looking at that now i run my exploit so', 'start': 981.839, 'duration': 5.041}
+{'text': 'm exec my vulnerability with the right', 'start': 984.32, 'duration': 3.759}
+{'text': 'address', 'start': 986.88, 'duration': 4.079}
+{'text': "and we've got a shell who am i", 'start': 988.079, 'duration': 6.0}
+{'text': 'root okay so now can i look at my shadow', 'start': 990.959, 'duration': 5.601}
+{'text': 'file so root is like god for this system', 'start': 994.079, 'duration': 4.081}
+{'text': "in linux there is nothing you can't do", 'start': 996.56, 'duration': 3.76}
+{'text': "as root okay so i've got my root shell", 'start': 998.16, 'duration': 4.96}
+{'text': "and i'm root so i can cat slash etcetera", 'start': 1000.32, 'duration': 4.24}
+{'text': "shadow and i can see what's in the", 'start': 1003.12, 'duration': 2.8}
+{'text': 'shadow file but the point is that', 'start': 1004.56, 'duration': 2.639}
+{'text': "there's nothing i can't do now i can", 'start': 1005.92, 'duration': 2.479}
+{'text': 'wipe the machine or do anything like', 'start': 1007.199, 'duration': 4.401}
+{'text': 'that myself and then i can quit this', 'start': 1008.399, 'duration': 4.721}
+{'text': 'and then my program just gracefully', 'start': 1011.6, 'duration': 3.359}
+{'text': 'exits because it now returns to normal', 'start': 1013.12, 'duration': 3.839}
+{'text': 'code and hopefully no one is any', 'start': 1014.959, 'duration': 3.68}
+{'text': "otherwise if anything's gone on now", 'start': 1016.959, 'duration': 2.88}
+{'text': 'there are things that the operating', 'start': 1018.639, 'duration': 2.32}
+{'text': 'system does to try and stop this from', 'start': 1019.839, 'duration': 3.68}
+{'text': 'happening randomizing your address', 'start': 1020.959, 'duration': 4.96}
+{'text': 'your memory layout and', 'start': 1023.519, 'duration': 4.16}
+{'text': 'things like no executing of stacks and', 'start': 1025.919, 'duration': 3.601}
+{'text': 'stuff there are ways around this they', 'start': 1027.679, 'duration': 4.0}
+{'text': 'obviously for a different video', 'start': 1029.52, 'duration': 2.96}
+{'text': 'but', 'start': 1031.679, 'duration': 1.921}
+{'text': 'at least things are getting definitely', 'start': 1032.48, 'duration': 3.439}
+{'text': 'better', 'start': 1033.6, 'duration': 2.319}
+{'text': 'stealth and botnets usually go hand in', 'start': 1036.559, 'duration': 4.081}
+{'text': 'hand because from the point of view of a', 'start': 1038.559, 'duration': 3.921}
+{'text': 'cnc server it wants to ensure and some', 'start': 1040.64, 'duration': 4.64}
+{'text': 'years ago it seems the nsa got a back', 'start': 1042.48, 'duration': 4.8}
+{'text': 'door in one of these routes presumably', 'start': 1045.28, 'duration': 3.759}
+{'text': 'because they got one of their people to', 'start': 1047.28, 'duration': 4.16}
+{'text': 'get a job', 'start': 1049.039, 'duration': 2.401}
