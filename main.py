@@ -20,4 +20,4 @@ sub_titles = YouTubeTranscriptApi.get_transcript(state_id)
 
 with open('subtitles.txt', 'w') as file:
     for line in sub_titles:
-        file.write(f'{line}\n')
+        file.write(line['text'] + '\n')
